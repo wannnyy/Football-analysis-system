@@ -1,0 +1,13 @@
+models/best.pt
+models/last.pt
+training/yolov5xu.pt
+training/yolov5xu.pt.4eba56ee5592414bb675f6b8c2d284ef.partial
+training/football-players-detection-1/football-players-detection-1/train
+training/football-players-detection-1/football-players-detection-1/test
+training/yolov5xu.pt
+test/
+train/
+.txt
+training
+training/football-players-detection-1/football-players-detection-1/valid
+yolov8x.pt
