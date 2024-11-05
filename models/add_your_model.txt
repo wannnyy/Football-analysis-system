@@ -1,0 +1,4 @@
+https://drive.google.com/file/d/1eZx2Ps5jsmcfbPpf63YP1l6wxFtfluoa/view?usp=drive_link
+
+My model after trained in google colab.
+Could be improved by using more epoch (5 at the time)
