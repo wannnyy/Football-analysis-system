@@ -11,3 +11,4 @@ train/
 training
 training/football-players-detection-1/football-players-detection-1/valid
 yolov8x.pt
+.pt
