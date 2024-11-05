@@ -7,7 +7,7 @@ training/football-players-detection-1/football-players-detection-1/test
 training/yolov5xu.pt
 test/
 train/
-.txt
+runs
 training
 training/football-players-detection-1/football-players-detection-1/valid
 yolov8x.pt
