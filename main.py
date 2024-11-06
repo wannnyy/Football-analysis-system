@@ -2,6 +2,7 @@ from utils import read_video, save_video
 from trackers import Tracker
 import cv2
 from team_assigner import TeamAssigner
+from camera_movement_estimator import CameraMovementEstimator
 from player_ball_assigner import PlayerBallAssigner
 import numpy as np
 
@@ -16,10 +17,21 @@ def main():
     tracker = Tracker('models/best.pt')
     # Could be better. Can be improved by training in google colab.
 
+
     tracks = tracker.get_object_tracks(video_frames,
                                        read_from_stub=True,
                                        stub_path='stubs/track_stubs.pkl')
+    # Assign the tracks position.
+    tracker.add_position_to_tracks(tracks)
     
+    
+    # camera movement estimator
+    camera_movement_estimator = CameraMovementEstimator(video_frames[0])
+    camera_movement_per_frame = camera_movement_estimator.get_camera_movement(video_frames,
+                                                                                read_from_stub=True,
+                                                                                stub_path='stubs/camera_movement_stub.pkl')
+    camera_movement_estimator.add_adjust_positions_to_tracks(tracks,camera_movement_per_frame)
+
 
     # Interpolate Ball positions
     tracks["ball"] = tracker.interpolate_ball_position(tracks["ball"])
@@ -59,21 +71,20 @@ def main():
     # for track_id, player in tracks['players'][0].items():
     #     bbox = player['bbox']
     #     frame = video_frames[0]
-
     #     # crop bbox from frame
     #     cropped_image = frame[int(bbox[1]):int(bbox[3]), int(bbox[0]):int(bbox[2])]
-
     #     # save the cropped image
     #     cv2.imwrite(f'output_videos/cropped_img.jpg', cropped_image)
 
-    #     break
 
-    # Draw output
+
+    # ----- Draw output ------
+    
     # Draw object Tracks
     output_video_frames =  tracker.draw_annotatinos(video_frames, tracks, team_ball_control)
 
-
-
+    ## Draw Camera movement
+    output_video_frames = camera_movement_estimator.draw_camera_movement(output_video_frames,camera_movement_per_frame)
 
     # Save video
     save_video(output_video_frames,'output_videos/output_video.avi')
